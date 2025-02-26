@@ -1,0 +1,27 @@
+databaseChangeLog:
+  - changeSet:
+      id: 3
+      author: misha
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            tableExists:
+              tableName: user_roles
+      changes:
+        - createTable:
+            tableName: user_roles
+            columns:
+              - column:
+                  name: user_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_user
+                    references: users(id)
+              - column:
+                  name: role_id
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_role
+                    references: roles(name)

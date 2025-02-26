@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      id: 4
+      author: misha
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            sqlCheck:
+              expectedResult: "1"
+              sql: "SELECT CASE WHEN EXISTS (SELECT 1 FROM roles) THEN 1 ELSE 0 END"
+      changes:
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: name
+                  value: USER
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: name
+                  value: ADMIN
